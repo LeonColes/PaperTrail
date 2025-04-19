@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu, MenuItemConstructorOptions, ipcMain } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -32,6 +32,12 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
     },
+    frame: false,  // 无边框窗口
+    width: 1200,
+    height: 800,
+    minWidth: 800,
+    minHeight: 600,
+    backgroundColor: '#ffffff',
   })
 
   // Test active push message to Renderer-process.
@@ -66,3 +72,25 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(createWindow)
+
+// 移除默认菜单
+Menu.setApplicationMenu(null);
+
+// 监听窗口控制事件
+ipcMain.on('window-minimize', () => {
+  if (win) win.minimize();
+});
+
+ipcMain.on('window-maximize', () => {
+  if (win) {
+    if (win.isMaximized()) {
+      win.unmaximize();
+    } else {
+      win.maximize();
+    }
+  }
+});
+
+ipcMain.on('window-close', () => {
+  if (win) win.close();
+});
