@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
-import { View, Avatar, Button, useTheme } from 'reshaped'
-import { X, Square, Minus, Settings, Smile, Sun, Moon } from 'react-feather'
-import { HashRouter } from 'react-router-dom'
-import AppRoutes from './routes'
+import { useEffect } from 'react';
+import { View, Avatar, Button, useTheme } from 'reshaped';
+import { X, Square, Minus, Settings, Smile, Sun, Moon } from 'react-feather';
+import { HashRouter } from 'react-router-dom';
+import AppRoutes from './routes';
 
-import 'reshaped/themes/figma/theme.css'
-import 'reshaped/themes/reshaped/theme.css'
-import 'reshaped/themes/fragments/twitter/theme.css'
-import 'reshaped/themes/slate/theme.css'
+import 'reshaped/themes/figma/theme.css';
+import 'reshaped/themes/reshaped/theme.css';
+import 'reshaped/themes/fragments/twitter/theme.css';
+import 'reshaped/themes/slate/theme.css';
 
 // 导入主题存储函数
 import { getColorMode, saveColorMode } from './store/themeStore';
@@ -15,7 +15,7 @@ import { getColorMode, saveColorMode } from './store/themeStore';
 // 定义可用的主题列表
 // const themeList = ['figma', 'reshaped', 'twitter', 'slate']
 
-const App = () => {
+const App: React.FC = () => {
   // 黑白模式
   // const [colorMode] = useState('light')
   const { setColorMode, invertColorMode, colorMode } = useTheme();
@@ -74,7 +74,7 @@ const App = () => {
         </HashRouter>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

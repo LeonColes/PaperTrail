@@ -1,12 +1,12 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom';
 
-import Index from '../pages'
+import Index from '../pages';
 
-const AppRoutes = ()=> (
+const AppRoutes: React.FC = ()=> (
   <Routes>
     <Route path='/' element={<Index />}>
     </Route>
   </Routes>
-)
+);
 
-export default AppRoutes
+export default AppRoutes;

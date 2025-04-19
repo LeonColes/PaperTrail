@@ -79,7 +79,7 @@ Menu.setApplicationMenu(null)
 
 // 监听窗口控制事件
 ipcMain.on('window-minimize', () => {
-  if (win) win.minimize();
+  if (win) win.minimize()
 })
 
 ipcMain.on('window-maximize', () => {
@@ -109,5 +109,5 @@ ipcMain.handle('get-color-mode', () => {
 // 保存颜色模式
 ipcMain.handle('save-color-mode', (_event, mode) => {
   themeStore.set('colorMode', mode)
-  return true;
+  return true
 })
