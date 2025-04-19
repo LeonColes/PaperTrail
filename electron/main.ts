@@ -1,8 +1,11 @@
-import { app, BrowserWindow, Menu, MenuItemConstructorOptions, ipcMain } from 'electron'
+import { app, BrowserWindow, Menu, ipcMain } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import Store from 'electron-store'
+import fs from 'node:fs/promises'
+
+// 导入IPC处理器
+import { registerIpcHandlers } from './ipc'
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -72,7 +75,10 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow();
+  registerIpcHandlers(win);
+})
 
 // 移除默认菜单
 Menu.setApplicationMenu(null)
@@ -91,23 +97,4 @@ ipcMain.on('window-maximize', () => {
 
 ipcMain.on('window-close', () => {
   if (win) win.close()
-})
-
-// 创建主题存储实例
-const themeStore = new Store({
-  name: 'theme-config',
-  defaults: {
-    colorMode: 'light'
-  }
-})
-
-// 在文件底部添加 IPC 处理器
-ipcMain.handle('get-color-mode', () => {
-  return themeStore.get('colorMode')
-})
-
-// 保存颜色模式
-ipcMain.handle('save-color-mode', (_event, mode) => {
-  themeStore.set('colorMode', mode)
-  return true
 })

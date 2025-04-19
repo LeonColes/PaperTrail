@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View, Avatar, Button, useTheme } from 'reshaped';
+import { View, Avatar, Button, ScrollArea, useTheme } from 'reshaped';
 import { X, Square, Minus, Settings, Smile, Sun, Moon } from 'react-feather';
 import { HashRouter } from 'react-router-dom';
 import AppRoutes from './routes';
@@ -26,11 +26,10 @@ const App: React.FC = () => {
 
   // 在组件挂载时，读取保存的颜色模式
   useEffect(() => {
-    getColorMode().then(savedMode => {
-      if (savedMode) {
-        setColorMode(savedMode);
-      }
-    });
+    const savedMode = getColorMode();
+    if (savedMode) {
+      setColorMode(savedMode);
+    }
   }, []);
 
   // 当颜色模式变化时，保存
@@ -49,7 +48,7 @@ const App: React.FC = () => {
       <nav>
         <View direction='row' justify='space-between'>
           <View direction='row'>
-            <Button color='primary' icon={<Smile />} />
+            <Button color='primary' icon={<Smile />} onClick={() => window.location.hash = '/'} />
             {/* 页面栈位置 */}
           </View>
           {/* 用户和设置 */}
@@ -61,17 +60,21 @@ const App: React.FC = () => {
             </View>
             {/* 右上角三按钮 */}
             <View direction='row' gap={1}>
-              <Button color='primary' variant='ghost' icon={<Minus />} onClick={() =>window.ipcRenderer.send('window-minimize')} />
-              <Button color='primary' variant='ghost' icon={<Square />} onClick={() =>window.ipcRenderer.send('window-maximize')} />
-              <Button color='primary' variant='ghost' icon={<X />} onClick={() =>window.ipcRenderer.send('window-close')} />
+              <Button color='primary' variant='ghost' icon={<Minus />} onClick={() => window.ipcRenderer.send('window-minimize')} />
+              <Button color='primary' variant='ghost' icon={<Square />} onClick={() => window.ipcRenderer.send('window-maximize')} />
+              <Button color='primary' variant='ghost' icon={<X />} onClick={() => window.ipcRenderer.send('window-close')} />
             </View>
           </View>
         </View>
       </nav>
-      <main w-full h-full>
-        <HashRouter>
-          <AppRoutes />
-        </HashRouter>
+      <main className="w-full h-full">
+        <View padding={3}>
+          <ScrollArea scrollbarDisplay="visible">
+            <HashRouter>
+              <AppRoutes />
+            </HashRouter>
+          </ScrollArea>
+        </View>
       </main>
     </>
   );
