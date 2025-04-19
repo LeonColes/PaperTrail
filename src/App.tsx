@@ -61,9 +61,9 @@ const App = () => {
             </View>
             {/* 右上角三按钮 */}
             <View direction='row' gap={1}>
-              <Button color='primary' variant='ghost' icon={<Minus />} />
-              <Button color='primary' variant='ghost' icon={<Square />} />
-              <Button color='primary' variant='ghost' icon={<X />} />
+              <Button color='primary' variant='ghost' icon={<Minus />} onClick={() =>window.ipcRenderer.send('window-minimize')} />
+              <Button color='primary' variant='ghost' icon={<Square />} onClick={() =>window.ipcRenderer.send('window-maximize')} />
+              <Button color='primary' variant='ghost' icon={<X />} onClick={() =>window.ipcRenderer.send('window-close')} />
             </View>
           </View>
         </View>
