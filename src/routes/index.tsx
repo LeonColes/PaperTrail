@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
 
-import Home from '../pages'
+import Index from '../pages'
 
 const AppRoutes = ()=> (
   <Routes>
-    <Route path='/' element={<Home />} />
+    <Route path='/' element={<Index />}>
+    </Route>
   </Routes>
 )
 
