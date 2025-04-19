@@ -75,27 +75,25 @@ app.on('activate', () => {
 app.whenReady().then(createWindow)
 
 // 移除默认菜单
-Menu.setApplicationMenu(null);
+Menu.setApplicationMenu(null)
 
 // 监听窗口控制事件
 ipcMain.on('window-minimize', () => {
   if (win) win.minimize();
-});
+})
 
 ipcMain.on('window-maximize', () => {
   if (win) {
-    if (win.isMaximized()) {
-      win.unmaximize();
-    } else {
-      win.maximize();
-    }
+    if (win.isMaximized()) win.unmaximize()
+    else win.maximize()
   }
-});
+})
 
 ipcMain.on('window-close', () => {
-  if (win) win.close();
-});
+  if (win) win.close()
+})
 
+// 创建主题存储实例
 const themeStore = new Store({
   name: 'theme-config',
   defaults: {
@@ -105,11 +103,11 @@ const themeStore = new Store({
 
 // 在文件底部添加 IPC 处理器
 ipcMain.handle('get-color-mode', () => {
-  return themeStore.get('colorMode');
-});
+  return themeStore.get('colorMode')
+})
 
 // 保存颜色模式
 ipcMain.handle('save-color-mode', (_event, mode) => {
-  themeStore.set('colorMode', mode);
+  themeStore.set('colorMode', mode)
   return true;
-});
+})
