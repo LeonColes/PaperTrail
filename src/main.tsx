@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import { Reshaped } from 'reshaped'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <Reshaped>
+      <App />
+    </Reshaped>
   </React.StrictMode>,
 )
 

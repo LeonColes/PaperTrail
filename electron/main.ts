@@ -2,6 +2,7 @@ import { app, BrowserWindow, Menu, MenuItemConstructorOptions, ipcMain } from 'e
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import Store from 'electron-store'
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -93,4 +94,22 @@ ipcMain.on('window-maximize', () => {
 
 ipcMain.on('window-close', () => {
   if (win) win.close();
+});
+
+const themeStore = new Store({
+  name: 'theme-config',
+  defaults: {
+    colorMode: 'light'
+  }
+})
+
+// 在文件底部添加 IPC 处理器
+ipcMain.handle('get-color-mode', () => {
+  return themeStore.get('colorMode');
+});
+
+// 保存颜色模式
+ipcMain.handle('save-color-mode', (_event, mode) => {
+  themeStore.set('colorMode', mode);
+  return true;
 });
