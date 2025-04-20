@@ -4,6 +4,7 @@ import { X, Square, Minus, Settings, Smile, Sun, Moon } from 'react-feather';
 import { HashRouter } from 'react-router-dom';
 import AppRoutes from './routes';
 
+import './index.css';
 import 'reshaped/themes/figma/theme.css';
 import 'reshaped/themes/reshaped/theme.css';
 import 'reshaped/themes/fragments/twitter/theme.css';
@@ -45,37 +46,33 @@ const App: React.FC = () => {
 
   return (
     <>
-      <nav>
-        <View direction='row' justify='space-between'>
-          <View direction='row'>
-            <Button color='primary' icon={<Smile />} onClick={() => window.location.hash = '/'} />
-            {/* 页面栈位置 */}
+      <View direction='row' justify='space-between'>
+        <View direction='row'>
+          <Button color='primary' icon={<Smile />} onClick={() => window.location.hash = '/'} />
+          {/* 页面栈位置 */}
+        </View>
+        {/* 用户和设置 */}
+        <View direction='row' gap={3}>
+          <View direction='row' gap={1}>
+            <Button color='primary' variant='ghost' icon={colorMode == 'light' ? <Sun /> : <Moon />} onClick={updateColorMode} />
+            <Button color='primary' variant='ghost' icon={<Settings />} />
+            <Button color='primary' variant='ghost' icon={<Avatar size={5.5} src='https://avatars.githubusercontent.com/u/133302251?v=4' />} />
           </View>
-          {/* 用户和设置 */}
-          <View direction='row' gap={3}>
-            <View direction='row' gap={1}>
-              <Button color='primary' variant='ghost' icon={colorMode == 'light' ? <Sun /> : <Moon />} onClick={updateColorMode} />
-              <Button color='primary' variant='ghost' icon={<Settings />} />
-              <Button color='primary' variant='ghost' icon={<Avatar size={5.5} src='https://avatars.githubusercontent.com/u/133302251?v=4' />} />
-            </View>
-            {/* 右上角三按钮 */}
-            <View direction='row' gap={1}>
-              <Button color='primary' variant='ghost' icon={<Minus />} onClick={() => window.ipcRenderer.send('window-minimize')} />
-              <Button color='primary' variant='ghost' icon={<Square />} onClick={() => window.ipcRenderer.send('window-maximize')} />
-              <Button color='primary' variant='ghost' icon={<X />} onClick={() => window.ipcRenderer.send('window-close')} />
-            </View>
+          {/* 右上角三按钮 */}
+          <View direction='row' gap={1}>
+            <Button color='primary' variant='ghost' icon={<Minus />} onClick={() => window.ipcRenderer.send('window-minimize')} />
+            <Button color='primary' variant='ghost' icon={<Square />} onClick={() => window.ipcRenderer.send('window-maximize')} />
+            <Button color='primary' variant='ghost' icon={<X />} onClick={() => window.ipcRenderer.send('window-close')} />
           </View>
         </View>
-      </nav>
-      <main className="w-full h-full">
-        <View padding={3}>
-          <HashRouter>
-            <AppRoutes />
-          </HashRouter>
-        </View>
-      </main>
+      </View>
+      <View padding={3}>
+        <HashRouter>
+          <AppRoutes />
+        </HashRouter>
+      </View>
     </>
-  );
+  )
 };
 
 export default App;

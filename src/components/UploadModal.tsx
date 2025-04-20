@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Button, Text, Modal, useTheme, Badge, DropdownMenu } from 'reshaped';
+import { View, Button, Text, Modal, useTheme, Badge, Select } from 'reshaped';
 import { X, Upload, Check, AlertCircle, Folder, ChevronDown } from 'react-feather';
 
 interface FolderOption {
@@ -189,18 +189,30 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUploadComp
   };
 
   // 修改文件夹选择处理函数
-  const handleFolderChange = (folderId: string) => {
-    setSelectedFolder(folderId);
+  const handleFolderChange = ({ value }: { value: string }) => {
+    setSelectedFolder(value);
 
     // 更新选中的文件夹名称显示
-    if (!folderId) {
+    if (!value) {
       setSelectedFolderName("默认位置");
     } else {
-      const folder = folderOptions.find(f => f.id === folderId);
+      const folder = folderOptions.find(f => f.id === value);
       if (folder) {
         setSelectedFolderName(folder.name);
       }
     }
+  };
+
+  // 将文件夹选项转换为Select组件可用的格式
+  const getFolderSelectOptions = () => {
+    const options = [
+      { value: "", label: "默认位置" },
+      ...folderOptions.map(folder => ({
+        value: folder.id,
+        label: folder.name
+      }))
+    ];
+    return options;
   };
 
   // 文件夹选择部分
@@ -210,53 +222,14 @@ const UploadModal: React.FC<UploadModalProps> = ({ isOpen, onClose, onUploadComp
     return (
       <View direction="column" gap={2}>
         <Text>选择目标文件夹</Text>
-        <DropdownMenu>
-          <DropdownMenu.Trigger>
-            {(triggerProps) => (
-              <Button
-                {...triggerProps}
-                variant="outline"
-                color="neutral"
-                attributes={{
-                  style: {
-                    width: '100%'
-                  }
-                }}
-              >
-                <View direction="row" justify="space-between" align="center" width="100%">
-                  <Text>{selectedFolderName}</Text>
-                  <ChevronDown size={16} />
-                </View>
-              </Button>
-            )}
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item onClick={() => handleFolderChange("")}>
-              <View direction="row" gap={2} align="center">
-                <Folder size={16} />
-                <Text>默认位置</Text>
-              </View>
-            </DropdownMenu.Item>
-
-            {folderOptions.map(folder => (
-              <DropdownMenu.Item
-                key={folder.id}
-                onClick={() => handleFolderChange(folder.id)}
-              >
-                <View direction="row" gap={2} align="center">
-                  <Folder size={16} color={
-                    folder.id === '1'
-                      ? '#1890ff'
-                      : folder.id === '2'
-                        ? '#52c41a'
-                        : '#faad14'
-                  } />
-                  <Text>{folder.name}</Text>
-                </View>
-              </DropdownMenu.Item>
-            ))}
-          </DropdownMenu.Content>
-        </DropdownMenu>
+        <Select
+          name="folderSelect"
+          placeholder="选择目标文件夹"
+          value={selectedFolder}
+          onChange={handleFolderChange}
+          options={getFolderSelectOptions()}
+          icon={<Folder size={16} />}
+        />
       </View>
     );
   };

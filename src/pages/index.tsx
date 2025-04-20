@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, Text, Container, useTheme, Card, Modal, ScrollArea, Skeleton } from 'reshaped';
 import {
-  FileText, Upload, Folder, Clipboard, Settings,
+  FileText, Upload, Folder, Clipboard,
   Search, Star, Clock, Plus, Filter, Trash2, Download, Edit2, AlertCircle
 } from 'react-feather';
 import UploadModal from '../components/UploadModal';
@@ -231,7 +231,7 @@ const Index: React.FC = () => {
   };
 
   return (
-    <View height="100%">
+    <View>
       <div style={{ display: 'flex', height: '100%' }}>
         {/* 左侧导航栏 */}
         <div style={{
@@ -293,27 +293,10 @@ const Index: React.FC = () => {
                 backgroundColor: 'transparent',
                 color: colorMode === 'light' ? '#333' : '#f5f5f5'
               }}
-              onClick={() => window.location.hash = '/batch-rename'}
-            >
-              <Edit2 size={18} color={colorMode === 'light' ? '#666' : '#aaa'} />
-              <div>批量重命名</div>
-            </div>
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 12px',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                gap: '12px',
-                backgroundColor: 'transparent',
-                color: colorMode === 'light' ? '#333' : '#f5f5f5'
-              }}
-              onClick={() => window.location.hash = '/homework-check'}
+              onClick={() => window.location.hash = '/assignment-manager'}
             >
               <Clipboard size={18} color={colorMode === 'light' ? '#666' : '#aaa'} />
-              <div>作业检查</div>
+              <div>学生作业管理</div>
             </div>
           </div>
         </div>
