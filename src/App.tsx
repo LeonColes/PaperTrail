@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View, Avatar, Button, ScrollArea, useTheme } from 'reshaped';
+import { View, Avatar, Button, useTheme } from 'reshaped';
 import { X, Square, Minus, Settings, Smile, Sun, Moon } from 'react-feather';
 import { HashRouter } from 'react-router-dom';
 import AppRoutes from './routes';
@@ -69,11 +69,9 @@ const App: React.FC = () => {
       </nav>
       <main className="w-full h-full">
         <View padding={3}>
-          <ScrollArea scrollbarDisplay="visible">
-            <HashRouter>
-              <AppRoutes />
-            </HashRouter>
-          </ScrollArea>
+          <HashRouter>
+            <AppRoutes />
+          </HashRouter>
         </View>
       </main>
     </>
